@@ -1,18 +1,32 @@
 services:
   minio:
-    image: "${DOCKER_IMAGE_NAME}"
+    image: "${DOCKER_IMAGE_NAME}"                
     environment:
-      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"        
       MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
-      MINIO_API_PORT_NUMBER: "${MINIO_API_PORT_NUMBER}"
-      MINIO_CONSOLE_PORT_NUMBER: "${MINIO_CONSOLE_PORT_NUMBER}"
-      MINIO_SCHEME: "${MINIO_SCHEME}"
-      MINIO_SERVER_URL: "${MINIO_SERVER_URL}"
-      MINIO_BROWSER_REDIRECT_URL: "${MINIO_BROWSER_REDIRECT_URL}"
+      MINIO_API_PORT_NUMBER: "${MINIO_API_PORT_NUMBER}"          
+      MINIO_CONSOLE_PORT_NUMBER: "${MINIO_CONSOLE_PORT_NUMBER}"  
+      MINIO_SCHEME: "${MINIO_SCHEME}"              
+      MINIO_SERVER_URL: "${MINIO_SERVER_URL}"      
+      MINIO_BROWSER_REDIRECT_URL: "${MINIO_BROWSER_REDIRECT_URL}"  
+      MINIO_KMS_MASTER_KEY: "${MINIO_KMS_MASTER_KEY}"  
+      MINIO_KMS_AUTO_ROTATE: "${MINIO_KMS_AUTO_ROTATE}"  
+      MINIO_DISTRIBUTED_MODE_ENABLED: "${MINIO_DISTRIBUTED_MODE_ENABLED}"  
+      MINIO_DOMAIN: "${MINIO_DOMAIN}"              
+      MINIO_REGION: "${MINIO_REGION}"              
+      MINIO_CACHE_DRIVES: "${MINIO_CACHE_DRIVES}"  
+      MINIO_CACHE_EXCLUDE: "${MINIO_CACHE_EXCLUDE}"
+      BITNAMI_DEBUG: "${BITNAMI_DEBUG}"            
+      MINIO_DEBUG: "${MINIO_DEBUG}"                
+      MINIO_HEALTHCHECK_OPTS: "${MINIO_HEALTHCHECK_OPTS}"  
     ports:
-      - "${MINIO_API_PORT_NUMBER}:${MINIO_API_PORT_NUMBER}"
-      - "${MINIO_CONSOLE_PORT_NUMBER}:${MINIO_CONSOLE_PORT_NUMBER}"
+      - "${MINIO_API_PORT_NUMBER}:${MINIO_API_PORT_NUMBER}"        
+      - "${MINIO_CONSOLE_PORT_NUMBER}:${MINIO_CONSOLE_PORT_NUMBER}"  
     volumes:
-      # sudo chown -R 1001:1001 ./minio
-      - ./minio:/bitnami/minio/data  
-    restart: ${CONTAINER_RESTART}
+      - ./minio:/bitnami/minio/data   
+    restart: ${CONTAINER_RESTART}      
+    healthcheck:
+      test: ["CMD", "curl", "-fsSL", "${HEALTHCHECK_TEST}"]
+      interval: "${HEALTHCHECK_INTERVAL}"
+      timeout: "${HEALTHCHECK_TIMEOUT}"
+      retries: "${HEALTHCHECK_RETRIES}"
