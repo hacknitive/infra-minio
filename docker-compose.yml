@@ -1,5 +1,5 @@
 services:
-  dms-minio:
+  minio:
     image: "${DOCKER_IMAGE_NAME}"
     environment:
       MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
